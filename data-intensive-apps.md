@@ -8,7 +8,7 @@
     - scalable -- understand load parameters, how performance will be affected when they increase; do this with monitoring percentiles. performance 𝛂 resources / load 
     - maintainable -- make ops tasks easy or automated, KISS
 - monitoring resources -- *avoid averages; they skew results*. Instead, look at median and percentiles to understand what worst performance actually is
-- vertical scaling (more/better hardware) vs horizontal scaling (distributed systems)
+- vertical scaling (better hardware on a single machine) vs horizontal scaling (distribute data/workload across multiple machines, commodity hardware)
 - elasticity = ability to auto-scale per load; good for unpredictable load, but more complex
 
 ## Ch 2. Data Models & Query Languages
@@ -59,8 +59,8 @@
 ### OLAP vs OLTP
 Analytics processing access patterns vary significantly from transaction processing. Analytics needs to query and aggregate large volume of data, and latency isn't as important. Transaction processing (i.e. user-facing transactions) require low-latency and generally involve only a few records accessed by id (e.g. a user's purchase data). For small applications, the same storage engines can be used for both, but as data set becomes larger, it's best to use separate data stores for OLTP and OLAP.
 
-Data Warehouses = data stores optimized for analytics, tend to be column-oriented data stores
-ETL = "extract, transform, load";  the process of porting over data from OLTP systems into your OLAP data warehouse
+- Data Warehouses = data stores optimized for analytics, tend to be column-oriented data stores
+- ETL = "extract, transform, load";  the process of porting over data from OLTP systems into your OLAP data warehouse
 
 #### Column-oriented databases
 - columns (rather than rows) are stored together on disk, and row-data is associated via the order that it's stored in (i.e. the 3rd value in each column corresponds to the same row/instance)
