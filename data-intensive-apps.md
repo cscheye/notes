@@ -56,6 +56,12 @@
 - compromise -- index has some data and a reference for auxiliary data. A covering index contains enough info for some queries so that they don't need to actually read the whole row
 - *mysql only uses one index per query*
 
+#### Other strategies
+
+- lucene: index structure is an "automaton". Similar to a trie, but enables search with edit distance > 0 (i.e. fuzzy search)
+- in-memory only: encoding data for disk is slow; avoid this by only having in-mem data storage and achieve durability via append-only logs (only works if your data set fits in memory)
+- anti-caching: only write to disk when cache is full, always write the oldest-retrieved record since it's least likely to be read soon
+
 ### OLAP vs OLTP
 Analytics processing access patterns vary significantly from transaction processing. Analytics needs to query and aggregate large volume of data, and latency isn't as important. Transaction processing (i.e. user-facing transactions) require low-latency and generally involve only a few records accessed by id (e.g. a user's purchase data). For small applications, the same storage engines can be used for both, but as data set becomes larger, it's best to use separate data stores for OLTP and OLAP.
 
