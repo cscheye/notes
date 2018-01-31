@@ -65,6 +65,8 @@ Analytics processing access patterns vary significantly from transaction process
 #### Column-oriented databases
 - columns (rather than rows) are stored together on disk, and row-data is associated via the order that it's stored in (i.e. the 3rd value in each column corresponds to the same row/instance)
 - columnar data can be compressed using bitmap encoding -- clever! (see p. 98)
-- instead of indexing, you can sort rows in a specific order that optimizes compression and/or range queries
+- instead of indexing, you can sort rows in a specific order that optimizes compression and/or range queries. You can have different sort orders on various replicas, so you still have data replication but each replica is optimized for a different type of query.
+- materialized views = similar to sql view, but query results are actually stored in a table on disk instead of running the view sql on the fly
+- Vertica has "projections", similar to materialized views. Be careful about creating these, just as indexes, because more projections means more work on writes/updates!
 - write pattern: similar to LSM-trees -- write to an in-memory data structure and append-only logs, then periodically compact and merge into the columns stored on disk
 - read pattern: again, similar to LSM-trees -- query optimizer needs to read from in-memory data store first and then disk. However, queries are declarative, so this is hidden from the developer
